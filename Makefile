@@ -45,4 +45,9 @@ install:
 	fi
 	# Configure awsume alias
 	awsume-configure --shell zsh
-	@echo "Installation complete. You may need to configure AWSCLI and awsume before use."
+	@echo "ℹ️  Installation complete. You may need to configure AWSCLI and awsume before use."
+
+clean:
+	@echo "ℹ️  Cleaning output files..."
+	find . -type f -regex "./output[0-9]*\.txt" -delete
+
