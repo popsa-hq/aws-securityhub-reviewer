@@ -5,7 +5,7 @@ This repository contains a Makefile that automates counting the number of AWS Se
 ## Prerequisites
 To use this tool, you need to have the following installed:
 
-- AWS CLI
+- The AWS CLI
 - `jq`
 - `awsume`
 - `make`
@@ -19,7 +19,7 @@ To install the dependencies, run the following command:
 make install
 ```
 
-This will install jq, awscli, and awsume if they are not already installed.
+This will install `jq`, `awscli`, and `awsume` if they are not already installed.
 
 Next, configure awsume with the AWS account that you want to count findings for:
 
@@ -41,7 +41,7 @@ To count the number of findings that match the AWS Foundational Security Best Pr
 make run
 ```
 
-This will output the number of matching findings to the console and to a file named output_<date_time>.txt.
+This will output the number of matching findings to the console and to a file named `output_<date_time>.txt`.
 
 You can also clean up the output files by running:
 
@@ -49,7 +49,7 @@ You can also clean up the output files by running:
 make clean
 ```
 
-This will remove all output_*.txt files from the current directory.
+This will remove all `output_*.txt` files from the current directory.
 
 ## Customization
 
@@ -57,4 +57,4 @@ If you want to count findings that match a different standard, update the awscli
 
 ## Troubleshooting
 
-If you encounter any issues with running the tool, try running the commands manually to see if you get any errors. If you are still having issues, consult the AWS CLI, jq, or awsume documentation for more information.
+If you encounter any issues with running the tool, try running the commands manually to see if you get any errors. If you are still having issues, consult the AWS CLI, `jq`, or `awsume` documentation for more information.
