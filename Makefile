@@ -15,8 +15,8 @@ run:
 	aws securityhub get-finding-aggregator --finding-aggregator-arn $$aggregator_arn --no-cli-pager
 	
 	@echo "ℹ️  Checking active findings count"
-	aws securityhub get-findings --query 'Findings[?RecordState==`ACTIVE`]' --filters '{\"GeneratorId\":[{\"Value\": \"aws-foundational-security\",\"Comparison\":\"PREFIX\"}]}' --output text --no-cli-pager | wc -l
-	
+	aws securityhub get-findings --query 'Findings[?RecordState==`ACTIVE` && Compliance.AssociatedStandards[?StandardsId==`standards/aws-foundational-security-best-practices/v/1.0.0`]]' --output text | tee -a $(output_file) | wc -l
+
 	@echo "ℹ️  Checking for active critical severity findings"
 	aws securityhub get-findings --query 'Findings[?Severity.Label==`CRITICAL`] | [?RecordState==`ACTIVE`] | [*][Title, GeneratorId]' --filters '{"GeneratorId":[{"Value": "aws-foundational-security","Comparison":"PREFIX"}]}' --no-cli-pager
 		
