@@ -25,8 +25,8 @@ run:
 	aws securityhub get-findings --query 'Findings[?RecordState==`ACTIVE` && Workflow.Status==`NEW` && Compliance.AssociatedStandards[?StandardsId==`standards/aws-foundational-security-best-practices/v/1.0.0`]].{Id: Id}' --output text --no-cli-pager | wc -l
 
 	@echo "ℹ️  Checking for active critical severity findings"
-	aws securityhub get-findings --query 'Findings[?RecordState==`ACTIVE` && Workflow.Status==`NEW` && Compliance.AssociatedStandards[?StandardsId==`standards/aws-foundational-security-best-practices/v/1.0.0`] && Severity.Label in [`CRITICAL`, `HIGH`]]' --output text --no-cli-pager 
-		
+	aws securityhub get-findings --query 'Findings[?RecordState==`ACTIVE` && Workflow.Status==`NEW` && Compliance.AssociatedStandards[?StandardsId==`standards/aws-foundational-security-best-practices/v/1.0.0`] && (Severity.Label==`CRITICAL` || Severity.Lable==`HIGH`)]].{Id: Id, Title: Title, Severity: Severity.Label, WorkflowStatus: Workflow.Status}' --output text --no-cli-pager 
+
 install:
 	@echo "ℹ️  Installing dependencies..."
 	# Install Homebrew if it's not already installed
