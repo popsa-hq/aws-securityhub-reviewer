@@ -23,12 +23,16 @@ run:
 	aws securityhub get-finding-aggregator --finding-aggregator-arn $$aggregator_arn --no-cli-pager
 	
 	@echo "ℹ️  Counting total number of active issues"
+	AWS_MAX_ATTEMPTS=5 \
+	AWS_RETRY_MODE=adaptive \
 	aws securityhub get-findings \
 	--query 'Findings[?RecordState==`ACTIVE` && Workflow.Status==`NEW` && Compliance.AssociatedStandards[?StandardsId==`standards/aws-foundational-security-best-practices/v/1.0.0`]].{Id: Id}' \
 	--output text \
 	--no-cli-pager | wc -l
 
 	@echo "ℹ️  Listing all active findings of critical and high severity"
+	AWS_MAX_ATTEMPTS=5 \
+	AWS_RETRY_MODE=adaptive \
 	aws securityhub get-findings \
 	--query 'Findings[?RecordState==`ACTIVE` && Workflow.Status==`NEW` && Compliance.AssociatedStandards[?StandardsId==`standards/aws-foundational-security-best-practices/v/1.0.0`] && (Severity.Label==`CRITICAL` || Severity.Lable==`HIGH`)]].{Id: Id, Title: Title, Severity: Severity.Label, WorkflowStatus: Workflow.Status}' \
 	--output text \
