@@ -1,4 +1,4 @@
-# AWS Security Hub Findings Counter
+# AWS Security Hub Reviewer
 
 This repository contains a Makefile that automates counting the number of AWS Security Hub findings that match a certain standard. It uses the AWS CLI, jq, and awsume.
 
