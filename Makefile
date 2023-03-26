@@ -49,5 +49,5 @@ install:
 
 clean:
 	@echo "ℹ️  Cleaning output files..."
-	find . -type f -regex "./output[0-9]*\.txt" -delete
+	find . -type f -name "output*.txt" -delete
 
