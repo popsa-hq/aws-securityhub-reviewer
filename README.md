@@ -10,7 +10,6 @@ To use this tool, you need to have the following installed:
 - `awsume`
 - `make`
 
-
 ## Setup
 
 To install the dependencies, run the following command:
@@ -35,13 +34,19 @@ aws configure --profile <profile>
 
 ## Usage
 
-To count the number of findings that match the AWS Foundational Security Best Practices standard, run the following command:
+To describe the number of total active controls and the critical or high-severity findings from AWS Foundational Security Best Practices standard, run the following command:
+
+```text
+make
+```
+
+This will execute the default Makefile target (`make run-logged`) which records the console output to a file named `output_<date_time>.txt`.
+
+To run the process without the output being written to a file, run the following command:
 
 ```text
 make run
 ```
-
-This will output the number of matching findings to the console and to a file named `output_<date_time>.txt`.
 
 You can also clean up the output files by running:
 
@@ -50,10 +55,6 @@ make clean
 ```
 
 This will remove all `output_*.txt` files from the current directory.
-
-## Customization
-
-If you want to count findings that match a different standard, update the awscli command in the run target of the Makefile.
 
 ## Troubleshooting
 
