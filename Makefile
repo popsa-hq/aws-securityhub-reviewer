@@ -34,7 +34,7 @@ run:
 	AWS_MAX_ATTEMPTS=5 \
 	AWS_RETRY_MODE=adaptive \
 	aws securityhub get-findings \
-	--query 'Findings[?RecordState==`ACTIVE` && Workflow.Status==`NEW` && Compliance.AssociatedStandards[?StandardsId==`standards/aws-foundational-security-best-practices/v/1.0.0`] && (Severity.Label==`CRITICAL` || Severity.Lable==`HIGH`)]].{Id: Id, Title: Title, Severity: Severity.Label, WorkflowStatus: Workflow.Status}' \
+	--query 'Findings[?RecordState==`ACTIVE` && Workflow.Status==`NEW` && Compliance.AssociatedStandards[?StandardsId==`standards/aws-foundational-security-best-practices/v/1.0.0`] && (Severity.Label==`CRITICAL` || Severity.Lable==`HIGH`)].{Id: Id, Title: Title, Severity: Severity.Label, WorkflowStatus: Workflow.Status}' \
 	--output text \
 	--no-cli-pager 
 
