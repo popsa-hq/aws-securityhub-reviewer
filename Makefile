@@ -38,6 +38,8 @@ run:
 	--output text \
 	--no-cli-pager 
 
+	@echo "✅ Process complete"
+
 install:
 	@echo "ℹ️  Installing dependencies"
 	# Install Homebrew if it's not already installed
