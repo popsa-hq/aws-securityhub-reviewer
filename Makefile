@@ -11,10 +11,7 @@ run-logged:
 	@echo "$(output_file)" > $(output_file)
 	$(MAKE) run | tee -a $(output_file)
 
-run:
-# 	@echo "ℹ️  Authenticating"
-# 	awsume -a popsa-production --no-session || true
-	
+run:	
 	@echo "ℹ️  Checking enabled AWS Foundational Security Best Practices"
 	aws securityhub get-enabled-standards --no-cli-pager
 	
