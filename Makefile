@@ -37,6 +37,9 @@ run:
 
 	@echo "✅ Process complete"
 
+run-python:
+	python3 aws_securityhub_check.py
+
 install:
 	@echo "ℹ️  Installing dependencies"
 	# Install Homebrew if it's not already installed
@@ -54,6 +57,10 @@ install:
 	# Install awsume if it's not already installed
 	if ! command -v awsume >/dev/null; then \
 		pip install awsume; \
+	fi
+	# Install boto3 for python3
+	if ! command -v boto3 >/dev/null; then \
+		pip install boto3; \
 	fi
 	# Configure awsume alias
 	awsume-configure --shell zsh
