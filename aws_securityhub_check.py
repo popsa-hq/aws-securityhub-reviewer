@@ -49,11 +49,7 @@ def count_active_issues():
     log("ℹ️  Counting total number of active issues")
     filters = {
         "RecordState": [{"Value": "ACTIVE", "Comparison": "EQUALS"}],
-        "WorkflowStatus": [{"Value": "NEW", "Comparison": "EQUALS"}],
-        "ComplianceAssociatedStandardsId": [{
-            "Value": "standards/aws-foundational-security-best-practices/v/1.0.0",
-            "Comparison": "EQUALS"
-        }]
+        "WorkflowStatus": [{"Value": "NEW", "Comparison": "EQUALS"}]
     }
 
     paginator = client.get_paginator("get_findings")
@@ -64,7 +60,16 @@ def count_active_issues():
 
     total = 0
     for i, page in enumerate(page_iterator):
-        count = len(page["Findings"])
+        findings = page["Findings"]
+        # Filter in Python for the correct standard
+        filtered_findings = [
+            f for f in findings
+            if any(
+                s.get("StandardsId") == "standards/aws-foundational-security-best-practices/v/1.0.0"
+                for s in f.get("Compliance", {}).get("AssociatedStandards", [])
+            )
+        ]
+        count = len(filtered_findings)
         total += count
         log(f"⏳ Page {i+1}: {count} findings (running total: {total})")
         time.sleep(0.1)  # simulate progress
@@ -76,10 +81,6 @@ def list_critical_high_findings():
     filters = {
         "RecordState": [{"Value": "ACTIVE", "Comparison": "EQUALS"}],
         "WorkflowStatus": [{"Value": "NEW", "Comparison": "EQUALS"}],
-        "ComplianceAssociatedStandardsId": [{
-            "Value": "standards/aws-foundational-security-best-practices/v/1.0.0",
-            "Comparison": "EQUALS"
-        }],
         "SeverityLabel": [
             {"Value": "CRITICAL", "Comparison": "EQUALS"},
             {"Value": "HIGH", "Comparison": "EQUALS"}
@@ -95,7 +96,15 @@ def list_critical_high_findings():
     total = 0
     for i, page in enumerate(page_iterator, 1):
         findings = page.get("Findings", [])
-        for finding in findings:
+        # Filter in Python for the correct standard
+        filtered_findings = [
+            f for f in findings
+            if any(
+                s.get("StandardsId") == "standards/aws-foundational-security-best-practices/v/1.0.0"
+                for s in f.get("Compliance", {}).get("AssociatedStandards", [])
+            )
+        ]
+        for finding in filtered_findings:
             finding_id = finding.get("Id", "")
             title = finding.get("Title", "")
             description = finding.get("Description", "").replace("\n", " ").strip()
